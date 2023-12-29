@@ -61,11 +61,8 @@ const proxyServer = net.createServer(function (rigSocket)
         })
 
     }
+});
 
-
-
-
-    proxyServer.listen(settings.proxyPort, () => {
+proxyServer.listen(settings.proxyPort, () => {
     console.log(`Stratum proxy is listening on port ${settings.proxyPort}`);
-    });
 });

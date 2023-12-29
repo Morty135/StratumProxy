@@ -1,6 +1,6 @@
 {
-    "poolURL":"your.pool.of.choice",
-    "poolPort":"port of your chosen pool",
-    "proxyPort":"port of this proxy",
-    "logTraffic":false
+    "poolURL": "your.preferred.pool.address",
+    "poolPort": 12345,
+    "proxyPort": 12345,
+    "logTraffic": false
 }
