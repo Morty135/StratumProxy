@@ -1,6 +1,1 @@
-{
-    "poolURL": "your.preferred.pool.address",
-    "poolPort": 12345,
-    "proxyPort": 12345,
-    "logTraffic": false
-}
+{"poolURL":"your.preferred.pool.address","poolPort":12345,"proxyPort":12345,"logTraffic":false}
