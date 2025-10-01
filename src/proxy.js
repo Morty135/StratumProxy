@@ -1,5 +1,6 @@
 const net = require('net');
 const fs = require('fs');
+const { timeStamp } = require('console');
 
 const settingsPath = 'settings.json';
 const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
@@ -7,10 +8,11 @@ const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
 let proxyServer = null;
 
 let logs = [];
+let connections = new Set();
 
 function addLog(message) {
-    const timestamp = new Date().toISOString();
-    const logEntry = `[${timestamp}] ${message}`;
+    const timestamp = Date.now();
+    const logEntry = `time: ${timestamp} ${message}`;
     logs.push(logEntry);
 
     if (logs.length > 500) logs.shift();
@@ -23,6 +25,8 @@ function startServer()
     //CreatesSocketForEveryRig
     proxyServer = net.createServer(function (rigSocket)  
     {
+        connections.add(rigSocket); // track connection
+        rigSocket.on('close', () => connections.delete(rigSocket));
         var poolSocket;
         //CreatesSocketForPool
         try
@@ -95,6 +99,9 @@ function stopServer()
     {
         return "error";
     }
+    connections.forEach((socket) => socket.destroy());
+    connections.clear();
+
     proxyServer.close(() => {
         console.log('Proxy server stopped.');
         proxyServer = null;

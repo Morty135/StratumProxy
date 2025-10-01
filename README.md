@@ -12,8 +12,9 @@
 ![image](https://github.com/Morty135/StratumProxy/assets/59707384/af9fcc8f-2b72-48b1-b5cf-aac51515b1f7)
 ![image](https://github.com/Morty135/StratumProxy/assets/59707384/503eeac1-386f-487b-be52-e1201721fc29)
 
+## Aditional info
+If you want the site to work correctly leave the logs true in the config file.
+The config file is updated via the web interface
+
 ## ToDo
-1. finish webui start stop functionality
-2. add traffic log to webui
-3. improve the visual of the webui
-4. set it up for docker
+Dockerize the application

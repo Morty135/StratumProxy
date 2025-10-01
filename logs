@@ -1,4 +1,0 @@
-[2025-10-01T20:51:45.769Z] rig: {"id":4,"method":"mining.submit","params":["t1NbRTbcN5BGzyJVhpM8JDQoYezQfC93bPX","0","ad92dd68","000000000000000000000000000000000000000000000000000036ee6e60","342fd35274c41aecf3f8d3bd350a5ed14a223f491cdb186759018e5783d8b97a59b5a9e0e2b0cc8b6d3bbe3b329107b2b7ef6aba29"]}
-[2025-10-01T20:51:45.782Z] pool: {"id":4,"error":null,"result":true}
-[2025-10-01T20:52:24.431Z] rig: {"id":4,"method":"mining.submit","params":["t1NbRTbcN5BGzyJVhpM8JDQoYezQfC93bPX","0","ad92dd68","000000000000000000000000000000000000000000000000000056f06e60","34074de319eccec1ad1d97fae6e616f24c5ee2a522e4a7ad3202d51bbd23f83cc486ff15e7cbd5ca7b51c463880e27d55fef244547"]}
-[2025-10-01T20:52:24.446Z] pool: {"id":4,"error":null,"result":true}

@@ -4,46 +4,58 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Proxy Settings</title>
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   <h1>Stratum Proxy</h1>
-  <form action="/start" method="POST">
-    <button>Start</button>
-  </form>
-  <form action="/stop" method="POST">
-    <button>Stop</button>
-  </form>
-  <h3>current settings:</h3>
-  <label>pool address: <%= settings.poolURL %></label>
-  <br><br>
-  <label>pool port: <%= settings.poolPort %></label>
-  <br><br>
-  <label>proxy port: <%= settings.proxyPort %></label>
-  <h3>settings:</h3>
-  <form action="/update" method="POST">
-    <label>
-      pool address:
-      <input type="text" name="pool_address" value="<%= settings.poolURL %>" required>
-    </label>
-    <br><br>
-    <label>
-      pool port:
-      <input type="number" name="pool_port" value="<%= settings.poolPort %>" required>
-    </label>
-    <br><br>
-    <label>
-      proxy port:
-      <input type="number" name="proxy_port" value="<%= settings.proxyPort %>" required>
-    </label>
-    <br><br>
-    <button type="submit">Update</button>
-  </form>
-  <h3><%= typeof status !== 'undefined' ? status : "" %></h3>
-  <h3>Live Logs:</h3>
-  <div id="log-container" style="background:#111; color:#0f0; padding:10px; height:300px; overflow-y:scroll;">
-    <pre id="logs"></pre>
+
+  <div class="card">
+    <h3>Control Panel</h3>
+    <div class="settings-row">
+      <form action="/start" method="POST" class="inline-form">
+        <button>Start</button>
+      </form>
+      <form action="/stop" method="POST" class="inline-form">
+        <button>Stop</button>
+      </form>
+    </div>
+    <div class="status"><%= typeof status !== 'undefined' ? status : "" %></div>
   </div>
 
+  <div class="card">
+    <h3>Current settings</h3>
+    <div class="settings-row">
+      <p><strong>Pool Address:</strong> <%= settings.poolURL %></p>
+      <p><strong>Pool Port:</strong> <%= settings.poolPort %></p>
+      <p><strong>Proxy Port:</strong> <%= settings.proxyPort %></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Update settings</h3>
+    <form action="/update" method="POST" class="settings-form">
+      <label>
+        Pool Address:
+        <input type="text" name="pool_address" value="<%= settings.poolURL %>" required>
+      </label>
+      <label>
+        Pool Port:
+        <input type="number" name="pool_port" value="<%= settings.poolPort %>" required>
+      </label>
+      <label>
+        Proxy Port:
+        <input type="number" name="proxy_port" value="<%= settings.proxyPort %>" required>
+      </label>
+      <button type="submit">Update Config</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h3>Live Logs</h3>
+    <div id="log-container">
+      <pre id="logs"></pre>
+    </div>
+  </div>
 
   <script>
     const logContainer = document.getElementById("logs");
