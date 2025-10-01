@@ -9,6 +9,8 @@ const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
 
 const proxy = require('./proxy.js');
 
+
+
 app.set("view engine", "ejs");
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -36,16 +38,36 @@ app.post('/update', (req, res) => {
 
 
 app.post('/start', (req, res) => {
-    proxy.startServer;
+    proxy.startServer();
     res.render('index', { settings: settings, status: "server started" });
 })
 
 
 
 app.post('/stop', (req, res) => {
-    proxy.stopServer;
-    res.render('index', { settings: settings, status: "server stopped" });
+    returnedStatus = proxy.stopServer();
+    res.render('index', { settings: settings, status: returnedStatus });
 })
+
+
+
+app.get('/logs', (req, res) => {
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+
+    let lastIndex = 0;
+
+    // Send updates every second
+    const interval = setInterval(() => {
+        const allLogs = proxy.getLogs();
+        while (lastIndex < allLogs.length) {
+            res.write(`data: ${allLogs[lastIndex++]}\n\n`);
+        }
+    }, 1000);
+
+    req.on('close', () => clearInterval(interval));
+});
 
 
 

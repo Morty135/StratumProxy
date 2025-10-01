@@ -39,5 +39,20 @@
     <button type="submit">Update</button>
   </form>
   <h3><%= typeof status !== 'undefined' ? status : "" %></h3>
+  <h3>Live Logs:</h3>
+  <div id="log-container" style="background:#111; color:#0f0; padding:10px; height:300px; overflow-y:scroll;">
+    <pre id="logs"></pre>
+  </div>
+
+
+  <script>
+    const logContainer = document.getElementById("logs");
+    const eventSource = new EventSource("/logs"); // Connects to SSE endpoint
+
+    eventSource.onmessage = function(event) {
+      logContainer.textContent += event.data + "\n";
+      logContainer.scrollTop = logContainer.scrollHeight; // Auto-scroll to bottom
+    };
+  </script>
 </body>
 </html>

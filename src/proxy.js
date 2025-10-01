@@ -6,12 +6,22 @@ const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
 
 let proxyServer = null;
 
+let logs = [];
+
+function addLog(message) {
+    const timestamp = new Date().toISOString();
+    const logEntry = `[${timestamp}] ${message}`;
+    logs.push(logEntry);
+
+    if (logs.length > 500) logs.shift();
+}
+
 
 
 function startServer()
 {
     //CreatesSocketForEveryRig
-    const proxyServer = net.createServer(function (rigSocket)  
+    proxyServer = net.createServer(function (rigSocket)  
     {
         var poolSocket;
         //CreatesSocketForPool
@@ -22,6 +32,7 @@ function startServer()
         catch
         {
             console.log("Couldn't connect to pool, check the port and address in settings.json.");
+            addLog("Failed to connect to pool.");
             return;
         }
 
@@ -42,10 +53,12 @@ function startServer()
                     jsonString = data.toString('utf8');
                     rigData = JSON.parse(jsonString);
                     console.log("decoded data from rig:" + rigData);
+                    addLog("rig: " + JSON.stringify(rigData));
                 }
                 catch (error) 
                 {
                     console.log("Data fromat differs from expected format, failed to decode: " + error);
+                    addLog("rig error: " + error);
                 }
             })
 
@@ -57,10 +70,12 @@ function startServer()
                     jsonString = data.toString('utf8');
                     poolData = JSON.parse(jsonString);
                     console.log("decoded data from rig:" + poolData);
+                    addLog("pool: " + JSON.stringify(poolData));
                 }
                 catch (error) 
                 {
                     console.log("Data fromat differs from expected format, failed to decode: " + error);
+                    addLog("pool error: " + error);
                 }
             })
 
@@ -78,13 +93,21 @@ function stopServer()
 {
     if (!proxyServer || !proxyServer.listening) 
     {
-        return res.send('Proxy is not running.');
+        return "error";
     }
     proxyServer.close(() => {
         console.log('Proxy server stopped.');
         proxyServer = null;
-        res.redirect('/');
     });
+    return "server stopped";
 }
 
-module.exports = { startServer, stopServer };
+
+
+function getLogs() {
+    return logs;
+}
+
+
+
+module.exports = { startServer, stopServer, getLogs };
