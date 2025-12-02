@@ -58,6 +58,7 @@ function startServer()
                     rigData = JSON.parse(jsonString);
                     console.log("decoded data from rig:" + rigData);
                     addLog("rig: " + JSON.stringify(rigData));
+                    fs.appendFileSync('traffic.log'," rig: " + JSON.stringify(rigData) + '\n');
                 }
                 catch (error) 
                 {
@@ -75,11 +76,13 @@ function startServer()
                     poolData = JSON.parse(jsonString);
                     console.log("decoded data from rig:" + poolData);
                     addLog("pool: " + JSON.stringify(poolData));
+                    fs.appendFileSync('traffic.log'," pool: " + JSON.stringify(poolData) + '\n');
                 }
                 catch (error) 
                 {
                     console.log("Data fromat differs from expected format, failed to decode: " + error);
                     addLog("pool error: " + error);
+                    fs.appendFileSync('traffic.log'," pool error: " + error + '\n');
                 }
             })
 

@@ -72,6 +72,18 @@ app.get('/logs', (req, res) => {
 
 
 
+app.get('/download-log', (req, res) => {
+    const file = "traffic.log";
+
+    if (!fs.existsSync(file)) {
+        return res.status(404).send("Log file not found.");
+    }
+
+    res.download(file, "traffic.log");
+});
+
+
+
 app.listen(port, () => {
     console.log(`Web listening on port ${port}`)
 })
